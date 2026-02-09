@@ -19,7 +19,7 @@ const (
 )
 
 func parsePackage(data string) (int, time.Duration, error) {
-	parts := strings.Split(data, ", ")
+	parts := strings.Split(data, ",")
 	if len(parts) != 2 {
 		return 0, 0, errors.New("invalid data format, should be two elements separated by comma")
 	}
