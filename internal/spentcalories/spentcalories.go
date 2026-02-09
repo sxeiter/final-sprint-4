@@ -57,8 +57,17 @@ func meanSpeed(steps int, height float64, duration time.Duration) float64 {
 
 // RunningSpentCalories рассчитывает калории для бега
 func RunningSpentCalories(steps int, weight, height float64, duration time.Duration) (float64, error) {
-	if steps <= 0 || weight <= 0 || height <= 0 || duration <= 0 {
-		return 0, fmt.Errorf("некорректные входные параметры")
+	if steps <= 0 {
+		return 0, fmt.Errorf("количество шагов должно быть больше 0")
+	}
+	if weight <= 0 {
+		return 0, fmt.Errorf("вес должен быть больше 0")
+	}
+	if height <= 0 {
+		return 0, fmt.Errorf("рост должен быть больше 0")
+	}
+	if duration <= 0 {
+		return 0, fmt.Errorf("длительность должна быть больше 0")
 	}
 
 	speed := meanSpeed(steps, height, duration)
@@ -73,8 +82,17 @@ func RunningSpentCalories(steps int, weight, height float64, duration time.Durat
 
 // WalkingSpentCalories рассчитывает калории для ходьбы
 func WalkingSpentCalories(steps int, weight, height float64, duration time.Duration) (float64, error) {
-	if steps <= 0 || weight <= 0 || height <= 0 || duration <= 0 {
-		return 0, fmt.Errorf("некорректные входные параметры")
+	if steps <= 0 {
+		return 0, fmt.Errorf("количество шагов должно быть больше 0")
+	}
+	if weight <= 0 {
+		return 0, fmt.Errorf("вес должен быть больше 0")
+	}
+	if height <= 0 {
+		return 0, fmt.Errorf("рост должен быть больше 0")
+	}
+	if duration <= 0 {
+		return 0, fmt.Errorf("длительность должна быть больше 0")
 	}
 
 	speed := meanSpeed(steps, height, duration)
@@ -97,7 +115,6 @@ func TrainingInfo(data string, weight, height float64) (string, error) {
 	}
 
 	var calories float64
-	var distanceKm, speed float64
 
 	switch trainingType {
 	case "Ходьба":
@@ -114,11 +131,12 @@ func TrainingInfo(data string, weight, height float64) (string, error) {
 		return "", fmt.Errorf("неизвестный тип тренировки")
 	}
 
-	distanceKm = distance(steps, height)
-	speed = meanSpeed(steps, height, duration)
+	distanceKm := distance(steps, height)
+	speed := meanSpeed(steps, height, duration)
 
+	// Форматируем как ожидается в тестах
 	return fmt.Sprintf(
-		"Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f",
+		"Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n",
 		trainingType,
 		duration.Hours(),
 		distanceKm,
